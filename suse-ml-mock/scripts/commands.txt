@@ -1,0 +1,3 @@
+npm install
+npm run mock -- --clientes 1000 --meses 18 --confirmar
+npm run mock:clear -- --limpar --confirmar
