@@ -275,6 +275,8 @@ def calcular_target_churn(
         cliente_id
     )
 
+    teve_atendimento_antes = False
+
     for registro in historico:
 
         data = converter_data(
@@ -284,11 +286,22 @@ def calcular_target_churn(
         if data is None:
             continue
 
+        # Verifica se o cliente já era cliente ativo
+        # antes da data de corte
+        if data <= data_corte:
+            teve_atendimento_antes = True
+
+        # Verifica se voltou a consumir após o corte
         if (
-            data_corte
-            < data
-            <= data_limite
+            data_corte < data <= data_limite
         ):
             return 0
 
+    # Cliente nunca teve atendimento:
+    # não deve entrar como churn
+    if not teve_atendimento_antes:
+        return None
+
+    # Já tinha histórico, mas não voltou
+    # nos próximos 90 dias = CHURN
     return 1
