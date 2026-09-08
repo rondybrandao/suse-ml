@@ -89,7 +89,7 @@ def construir_features(historico):
                 "servicos": registro.get(
                     "servicos", []
                 ),
-                "profissional": registro.get()
+                "profissional": registro.get("profissional")
             })
 
     eventos.sort(
